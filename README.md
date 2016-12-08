@@ -3,5 +3,5 @@ RecyclerView-master extends RecyclerView, include pull refresh 、load more 、a
 
 
 ##Recommend
-https://github.com/jdsjlzx/LRecyclerView <br>
-https://github.com/wasabeef/recyclerview-animators
+        https://github.com/jdsjlzx/LRecyclerView
+        https://github.com/wasabeef/recyclerview-animators
