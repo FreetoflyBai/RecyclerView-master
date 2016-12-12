@@ -1,4 +1,4 @@
-package com.android.recyclerview.grid;
+package com.android.recyclerview.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,6 +21,10 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
+    };
+
+    private int[] HEADER_FOOTER_COUNT=new int[]{
+            1,1
     };
 
     private Drawable mDivider;
@@ -114,6 +118,14 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
      */
     private boolean isLastColumn(RecyclerView parent, int pos, int spanCount,
                                  int childCount) {
+        if(pos<HEADER_FOOTER_COUNT[0]){
+            return true;
+        }else if(pos>=(childCount-HEADER_FOOTER_COUNT[0])){
+            return true;
+        }else{
+            pos=pos-HEADER_FOOTER_COUNT[0];
+            childCount=childCount-(HEADER_FOOTER_COUNT[0]+HEADER_FOOTER_COUNT[1]);
+        }
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             int orientation=((GridLayoutManager)layoutManager).getOrientation();
@@ -138,6 +150,14 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
      */
     private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
                               int childCount) {
+        if(pos<HEADER_FOOTER_COUNT[0]){
+            return true;
+        }else if(pos>=(childCount-HEADER_FOOTER_COUNT[0])){
+            return true;
+        }else{
+            pos=pos-HEADER_FOOTER_COUNT[0];
+            childCount=childCount-(HEADER_FOOTER_COUNT[0]+HEADER_FOOTER_COUNT[1]);
+        }
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             int orientation=((GridLayoutManager)layoutManager).getOrientation();

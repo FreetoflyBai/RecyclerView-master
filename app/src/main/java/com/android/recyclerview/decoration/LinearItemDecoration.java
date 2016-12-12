@@ -1,4 +1,4 @@
-package com.android.recyclerview.linear;
+package com.android.recyclerview.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;

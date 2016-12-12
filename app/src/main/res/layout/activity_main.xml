@@ -4,10 +4,10 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.recyclerview.base.MainActivity">
+    tools:context="com.android.recyclerview.ui.main.MainActivity">
 
     <com.android.recyclerview.view.LRecyclerView
-        android:id="@+id/lrv"
+        android:id="@+id/lrv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>

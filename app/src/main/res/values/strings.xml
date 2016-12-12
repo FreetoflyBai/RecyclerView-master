@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">RecyclerView-master</string>
-    <string-array name="item">
+    <string-array name="main_item">
+        <item>LinearManager</item>
+        <item>GridManager</item>
+        <item>StaggeredManager</item>
+    </string-array>
+
+    <string-array name="linear_item">
         <item>A</item>
         <item>A</item>
         <item>A</item>
@@ -21,12 +27,6 @@
         <item>A</item>
         <item>A</item>
         <item>A</item>
-        <item>A</item>
-        <item>A</item>
-        <item>A</item>
-        <item>A</item>
-        <item>A</item>
-        <item>A</item>
-        <item>A</item>
+
     </string-array>
 </resources>

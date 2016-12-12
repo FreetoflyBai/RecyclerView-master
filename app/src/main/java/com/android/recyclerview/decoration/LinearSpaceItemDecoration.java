@@ -1,4 +1,4 @@
-package com.android.recyclerview.linear;
+package com.android.recyclerview.decoration;
 
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
