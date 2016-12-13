@@ -5,10 +5,12 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.recyclerview.R;
+import com.android.recyclerview.decoration.GridHeaderFooterItemDecoration;
 import com.android.recyclerview.decoration.GridItemDecoration;
 import com.android.recyclerview.decoration.GridSpaceItemDecoration;
 import com.android.recyclerview.view.LRecyclerView;
@@ -35,7 +37,8 @@ public class GridLayoutActivity extends AppCompatActivity implements LRecyclerVi
         GridLayoutManager vGridLayoutManager=
                 new GridLayoutManager(this,spanCount,GridLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(vGridLayoutManager);
-        mRecyclerView.addItemDecoration(new GridItemDecoration(this));
+        mRecyclerView.addItemDecoration(
+                new GridHeaderFooterItemDecoration(this,new int[]{1,1}));
         mRecyclerView.setAdapter(new GridLayoutAdapter(this));
 
         mRecyclerView.setRefreshEnabled(true);

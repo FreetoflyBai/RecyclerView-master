@@ -42,7 +42,7 @@ public class StaggeredGridActivity extends AppCompatActivity implements LRecycle
         mRecyclerView.addHeaderView(
                 View.inflate(this,R.layout.view_header,null));
         mRecyclerView.addFooterView(
-                View.inflate(this,R.layout.view_footer,(ViewGroup)findViewById(android.R.id.content)));
+                View.inflate(this,R.layout.view_footer,null));
         mRecyclerView.addRefresh(this);
     }
 

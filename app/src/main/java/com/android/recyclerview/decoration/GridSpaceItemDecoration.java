@@ -23,10 +23,26 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration{
 
     private int mOrientation;
 
+    private int[] HEADER_FOOTER_COUNT=new int[]{
+            0,0
+    };
+
     public GridSpaceItemDecoration(int spaceSize, int orientation){
         this.mSpaceSize=spaceSize;
         setOrientation(orientation);
+    }
 
+    /**
+     * headerFooterCount 为Header 、Footer 数量, 数组形式
+     * 默认为无Header 、Footer
+     * @param spaceSize
+     * @param orientation
+     * @param headerFooterCount
+     */
+    public GridSpaceItemDecoration(int spaceSize, int orientation,int[] headerFooterCount){
+        this.mSpaceSize=spaceSize;
+        this.HEADER_FOOTER_COUNT=headerFooterCount;
+        setOrientation(orientation);
     }
 
     private void setOrientation(int orientation) {
@@ -36,8 +52,22 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration{
         mOrientation = orientation;
     }
 
-
-    private boolean getFirstRaw(int spanCount,int itemPosition){
+    /**
+     * 去除Header和Footer部分
+     * 区分横向与纵向
+     * @param spanCount
+     * @param itemPosition
+     * @param childCount
+     * @return
+     */
+    private boolean getFirstRaw(int spanCount,int itemPosition,int childCount){
+        if(itemPosition<HEADER_FOOTER_COUNT[0]){
+            return false;
+        }else if(itemPosition>=childCount-HEADER_FOOTER_COUNT[1]){
+            return false;
+        }else{
+            itemPosition=itemPosition-HEADER_FOOTER_COUNT[0];
+        }
         if(mOrientation==GridLayoutManager.VERTICAL){
             if(itemPosition<spanCount){
                 return true;
@@ -50,7 +80,22 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration{
         return false;
     }
 
-    private boolean getFirstColum(int spanCount,int itemPosition){
+    /**
+     * 去除Header和Footer部分
+     * 区分横向与纵向
+     * @param spanCount
+     * @param itemPosition
+     * @param childCount
+     * @return
+     */
+    private boolean getFirstColum(int spanCount,int itemPosition,int childCount){
+        if(itemPosition<HEADER_FOOTER_COUNT[0]){
+            return false;
+        }else if(itemPosition>=childCount-HEADER_FOOTER_COUNT[1]){
+            return false;
+        }else{
+            itemPosition=itemPosition-HEADER_FOOTER_COUNT[0];
+        }
         if(mOrientation==GridLayoutManager.VERTICAL){
             if(itemPosition%spanCount==0){
                 return true;
@@ -75,9 +120,10 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
         GridLayoutManager gridLayoutManager= (GridLayoutManager) parent.getLayoutManager();
         int spanCount=gridLayoutManager.getSpanCount();
+        int childCount=parent.getAdapter().getItemCount();
         outRect.set(
-                getFirstColum(spanCount,itemPosition)?mSpaceSize:0,
-                getFirstRaw(spanCount,itemPosition)?mSpaceSize:0,
+                getFirstColum(spanCount,itemPosition,childCount)?mSpaceSize:0,
+                getFirstRaw(spanCount,itemPosition,childCount)?mSpaceSize:0,
                 mSpaceSize,
                 mSpaceSize);
 

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.recyclerview.R;
+import com.android.recyclerview.decoration.LinearHeaderFooterItemDecotation;
+import com.android.recyclerview.decoration.LinearSpaceItemDecoration;
 import com.android.recyclerview.ui.linear.LinearLayoutAdapter;
 import com.android.recyclerview.decoration.LinearItemDecoration;
 import com.android.recyclerview.view.LRecyclerView;
@@ -35,7 +37,8 @@ public class LinearLayoutActivity extends AppCompatActivity implements LRecycler
         LinearLayoutManager vLinearLayoutManager=
                 new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(vLinearLayoutManager);
-        mRecyclerView.addItemDecoration(new LinearItemDecoration(this,LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(
+                new LinearHeaderFooterItemDecotation(this,LinearLayoutManager.VERTICAL,new int[]{1,1}));
         mRecyclerView.setAdapter(new LinearLayoutAdapter(this));
 
         mRecyclerView.setRefreshEnabled(true);

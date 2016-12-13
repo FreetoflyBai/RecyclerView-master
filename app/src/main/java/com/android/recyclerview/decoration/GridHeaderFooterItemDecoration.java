@@ -7,111 +7,39 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.RecyclerView.State;
-import android.view.View;
 
 /**
  * Description: GridLayout ItemDecoration
- *              包含隐藏Line的方法，只留空白间隙，默认隐藏
+ *              包含Header和Footer判断方法，默认无Header与Footer，如有请传入数量
+ *              默认不绘制Line，原因如下：
+ *              parent.getChildCount() 获取结果为当前屏幕item总数，不是所有item总数
+ *              parent.getAdapter().getItemCount() 可获取item总数，但是View绘制不能超出屏幕
+ *              所以无法准确定位当前item位置，无法去除不应出现的线条
  * Author     : kevin.bai
  * Time       : 2016/12/5 11:54
  * QQ         : 904869397@qq.com
  */
-public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
+public class GridHeaderFooterItemDecoration extends RecyclerView.ItemDecoration{
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
     };
+    private int[] HEADER_FOOTER_COUNT=new int[]{
+            0,0
+    };
     private Drawable DIVIDER;
-    private boolean SHUTDOWN_LINE =true;
 
-    public GridItemDecoration(Context context) {
+    public GridHeaderFooterItemDecoration(Context context,int[] headerFooterCount) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         DIVIDER = a.getDrawable(0);
         a.recycle();
-    }
-
-    public GridItemDecoration(Context context,boolean shutdownLine) {
-        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-        DIVIDER = a.getDrawable(0);
-        a.recycle();
-        this.SHUTDOWN_LINE =shutdownLine;
+        this.HEADER_FOOTER_COUNT=headerFooterCount;
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, State state) {
-        if(SHUTDOWN_LINE){
-            return;
-        }
-        drawHorizontal(c, parent);
-        drawVertical(c, parent);
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+
     }
-
-    /**
-     * 获取列数
-     * @param parent
-     * @return
-     */
-    private int getSpanCount(RecyclerView parent) {
-        int spanCount = -1;
-        LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
-        }
-        return spanCount;
-    }
-
-    /**
-     * 绘制横向line
-     * @param c
-     * @param parent
-     */
-    private void drawHorizontal(Canvas c, RecyclerView parent) {
-        int childCount=parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            if (!isLastRaw(parent, i, getSpanCount(parent), childCount)) {
-                final View child = parent.getChildAt(i);
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                        .getLayoutParams();
-                final int left = child.getLeft() - params.leftMargin;
-                final int right = child.getRight() + params.rightMargin
-                        + DIVIDER.getIntrinsicWidth();//添加竖向线宽
-                final int top = child.getBottom() + params.bottomMargin;
-                final int bottom = top + DIVIDER.getIntrinsicHeight();
-                DIVIDER.setBounds(left, top, right, bottom);
-                DIVIDER.draw(c);
-            }
-
-        }
-    }
-
-    /**
-     * 绘制纵向line
-     * @param c
-     * @param parent
-     */
-    private void drawVertical(Canvas c, RecyclerView parent) {
-        int childCount=parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            if (!isLastColumn(parent, i, getSpanCount(parent), childCount)) {
-                final View child = parent.getChildAt(i);
-
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                        .getLayoutParams();
-                final int top = child.getTop() - params.topMargin;
-                final int bottom = child.getBottom() + params.bottomMargin
-                        + DIVIDER.getIntrinsicHeight();//添加横向线高
-                final int left = child.getRight() + params.rightMargin;
-                final int right = left + DIVIDER.getIntrinsicWidth();
-
-                DIVIDER.setBounds(left, top, right, bottom);
-                DIVIDER.draw(c);
-            }
-
-        }
-    }
-
 
     /**
      * 判断是否是最后一列
@@ -124,7 +52,15 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
      */
     private boolean isLastColumn(RecyclerView parent, int pos, int spanCount,
                                  int childCount) {
-        LayoutManager layoutManager = parent.getLayoutManager();
+        if(pos<HEADER_FOOTER_COUNT[0]){
+            return true;
+        }else if(pos>=(childCount-HEADER_FOOTER_COUNT[1])){
+            return true;
+        }else{
+            pos=pos-HEADER_FOOTER_COUNT[0];
+            childCount=childCount-(HEADER_FOOTER_COUNT[0]+HEADER_FOOTER_COUNT[1]);
+        }
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             int orientation=((GridLayoutManager)layoutManager).getOrientation();
             if(orientation==GridLayoutManager.VERTICAL){
@@ -154,7 +90,15 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
      */
     private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
                               int childCount) {
-        LayoutManager layoutManager = parent.getLayoutManager();
+        if(pos<HEADER_FOOTER_COUNT[0]){
+            return true;
+        }else if(pos>=(childCount-HEADER_FOOTER_COUNT[1])){
+            return true;
+        }else{
+            pos=pos-HEADER_FOOTER_COUNT[0];
+            childCount=childCount-(HEADER_FOOTER_COUNT[0]+HEADER_FOOTER_COUNT[1]);
+        }
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             int orientation=((GridLayoutManager)layoutManager).getOrientation();
             if(orientation==GridLayoutManager.VERTICAL){
@@ -195,4 +139,5 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
                 isLastRaw(parent,itemPosition,spanCount,childCount)?0: DIVIDER.getIntrinsicHeight());
 
     }
+
 }
