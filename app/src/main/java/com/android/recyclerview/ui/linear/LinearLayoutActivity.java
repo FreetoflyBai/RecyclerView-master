@@ -44,9 +44,11 @@ public class LinearLayoutActivity extends AppCompatActivity implements LRecycler
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
         mRecyclerView.addHeaderView(
-                LayoutInflater.from(this).inflate(R.layout.view_header,(ViewGroup)findViewById(android.R.id.content),false));
+                LayoutInflater.from(this).inflate(R.layout.view_header,
+                        (ViewGroup)findViewById(android.R.id.content),false));
         mRecyclerView.addFooterView(
-                LayoutInflater.from(this).inflate(R.layout.view_footer,(ViewGroup)findViewById(android.R.id.content),false));
+                LayoutInflater.from(this).inflate(R.layout.view_footer,
+                        (ViewGroup)findViewById(android.R.id.content),false));
         mRecyclerView.addRefresh(this);
     }
 
