@@ -5,19 +5,19 @@ RecyclerView-master extends RecyclerView, include pull refresh 、load more 、a
 ![image](https://github.com/FreetoflyBai/RecyclerView-master/blob/master/screenshots/2.png)
 ![image](https://github.com/FreetoflyBai/RecyclerView-master/blob/master/screenshots/3.png)
 
-##Instructions
+## Instructions
 
-###Linear
+### Linear
 ![image](https://github.com/FreetoflyBai/RecyclerView-master/blob/master/screenshots/4.png)
 
-###Grid
+### Grid
 ![image](https://github.com/FreetoflyBai/RecyclerView-master/blob/master/screenshots/5.png)
 
-###StaggeredGrid
+### StaggeredGrid
 ![image](https://github.com/FreetoflyBai/RecyclerView-master/blob/master/screenshots/6.png)
 
 
-##Recommend
+## Recommend
 
 https://github.com/jdsjlzx/LRecyclerView <br>
 https://github.com/wasabeef/recyclerview-animators
